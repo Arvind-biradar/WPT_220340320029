@@ -1,0 +1,146 @@
+<html>
+
+<body>
+
+	<br>
+	<Br />Book id<input type="text" id="bookid" /><span id="'msg1">Message</span>
+	<br>
+	<Br />Book name<input type="text" id="bookname" />
+	<br>
+	<Br />Price<input type="text" id="price" /><br>
+	<br>
+	<button id="b2">add a book</button>
+
+	<button id="b2"> update book</button>
+	<br>
+	<p id="msg2">output...</p>
+
+
+
+</body>
+
+<script src="jquery-3.5.1.min.js"></script>
+<script>//our scrip will come here 
+
+
+
+	$(document).ready(function () {
+
+           
+
+
+		$("#b1").click(function () {
+			console.log("no more sins");
+
+			let input = { bookid: $("#bookid").val(), bookname: $("#bookname").val(), price: $("#price").val() };
+
+			let call = {
+				data: input,
+				url: "hhtp://localhost:8081/poc1",
+				type: 'get',
+				dataType: 'json',
+				success: (res) => {
+					console.log(res.status);
+
+                   if(res.status===false){
+					$("#msg1").text("Book Not Added");
+				   }
+				   else{
+					$("#msg1").text("Book Added");
+					let list=''
+					for(var s=0 ;s<res.length;s++){
+						list +=" "+res.detail.bookid+" "+res.detail.bookname+" "+res.detail.price;
+					}
+					$("msg2").text(list);
+				   }
+
+				},
+				error: (err) => {
+					console.log(err);
+
+				}
+
+			}
+			$.ajax(call);
+		});
+
+		
+		$("#b2").click(function () {
+			console.log("no more sins");
+
+			let input = { bookid: $("#bookid").val(), bookname: $("#bookname").val(), price: $("#price").val() };
+
+			let call1 = {
+				data: input,
+				url: "hhtp://localhost:8081/poc2",
+				type: 'get',
+				dataType: 'json',
+				success: (res) => {
+					console.log(res.status);
+
+                   if(res.status===false){
+					$("#msg1").text("Book Not updated");
+				   }
+				   else{
+					$("#msg1").text("Book price updated");
+					
+				   }
+
+				},
+				error: (err) => {
+					console.log(err);
+
+				}
+
+			}
+			$.ajax(call1);
+		});
+
+
+
+
+		$("#b2").blur(function () {
+			console.log("no more sins");
+
+			let input = { bookid: $("#bookid").val(), bookname: $("#bookname").val(), price: $("#price").val() };
+
+			let call2 = {
+				data: input,
+				url: "hhtp://localhost:8081/poc3",
+				type: 'get',
+				dataType: 'json',
+				success: (res) => {
+					console.log(res.status);
+
+                   if(res.status===false){
+					$("#msg1").text("BookNot found");
+
+					$("#b2").val("");
+					$("#b3").val("");
+
+				   }
+				   else{
+					$("#msg1").text("Book found");
+					$("#b2").val(res.detail.bookname);
+					$("#b3").val(res.detail.price);
+				   }
+
+				},
+				error: (err) => {
+					console.log(err);
+
+				}
+
+			}
+			$.ajax(call2);
+		});
+
+
+
+	});
+
+
+</script>
+
+
+</html>
